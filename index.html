@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#151A2D" />
+  <title>WordFlow 单词流</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="phone-shell">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">WORD FLOW</p>
+        <h1>单词流</h1>
+      </div>
+      <button class="icon-button" id="themeToggle" aria-label="切换主题">◐</button>
+    </header>
+
+    <main>
+      <section class="view active" id="view-home">
+        <div class="hero-card">
+          <div>
+            <p class="muted">今日进度</p>
+            <h2><span id="todayLearned">0</span>/<span id="dailyGoal">30</span></h2>
+            <p id="streakText">连续学习 0 天</p>
+          </div>
+          <div class="ring" id="progressRing"><span id="progressPercent">0%</span></div>
+        </div>
+
+        <div class="quick-grid">
+          <button class="quick-card" data-nav="learn">
+            <strong>开始学习</strong>
+            <span>卡片记忆 + 复习安排</span>
+          </button>
+          <button class="quick-card" data-nav="quiz">
+            <strong>选择测试</strong>
+            <span>10 题快速检测</span>
+          </button>
+          <button class="quick-card" data-nav="spell">
+            <strong>拼写测试</strong>
+            <span>根据释义写单词</span>
+          </button>
+          <button class="quick-card" data-nav="book">
+            <strong>单词本</strong>
+            <span>搜索、收藏、错词</span>
+          </button>
+        </div>
+
+        <section class="panel">
+          <div class="panel-title">
+            <h3>复习概况</h3>
+            <span id="dueBadge">0 个待复习</span>
+          </div>
+          <div class="stats-grid">
+            <div><b id="masteredCount">0</b><span>掌握</span></div>
+            <div><b id="wrongCount">0</b><span>错词</span></div>
+            <div><b id="favoriteCount">0</b><span>收藏</span></div>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="view-learn">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">CARD STUDY</p>
+            <h2>卡片学习</h2>
+          </div>
+          <button class="secondary" id="shuffleBtn">换一组</button>
+        </div>
+        <div class="study-card" id="studyCard">
+          <button class="favorite-btn" id="favoriteBtn">☆</button>
+          <p class="tag" id="cardTag">核心</p>
+          <h2 id="cardWord">abandon</h2>
+          <p class="phonetic" id="cardPhonetic">/əˈbændən/</p>
+          <div class="divider"></div>
+          <p class="meaning" id="cardMeaning">放弃；抛弃</p>
+          <p class="example" id="cardExample">Never abandon your goal.</p>
+          <p class="example-cn" id="cardExampleCn">永远不要放弃你的目标。</p>
+        </div>
+        <div class="actions three">
+          <button class="danger" id="forgotBtn">忘记</button>
+          <button class="warning" id="vagueBtn">模糊</button>
+          <button class="success" id="knownBtn">认识</button>
+        </div>
+      </section>
+
+      <section class="view" id="view-quiz">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">QUIZ</p>
+            <h2>选择测试</h2>
+          </div>
+          <button class="secondary" id="restartQuizBtn">重开</button>
+        </div>
+        <div class="quiz-card">
+          <div class="quiz-meta"><span id="quizIndex">1/10</span><span id="quizScore">得分 0</span></div>
+          <h2 id="quizWord">word</h2>
+          <p class="muted">选择正确的中文释义</p>
+          <div class="options" id="quizOptions"></div>
+          <p class="feedback" id="quizFeedback"></p>
+        </div>
+      </section>
+
+      <section class="view" id="view-spell">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">SPELLING</p>
+            <h2>拼写测试</h2>
+          </div>
+          <button class="secondary" id="restartSpellBtn">换题</button>
+        </div>
+        <div class="quiz-card">
+          <p class="tag" id="spellTag">核心</p>
+          <h3 id="spellMeaning">中文释义</h3>
+          <p class="example-cn" id="spellExampleCn">例句中文</p>
+          <input id="spellInput" class="spell-input" type="text" autocomplete="off" placeholder="输入英文单词" />
+          <div class="actions two">
+            <button class="secondary" id="spellHintBtn">提示</button>
+            <button class="primary" id="spellCheckBtn">检查</button>
+          </div>
+          <p class="feedback" id="spellFeedback"></p>
+        </div>
+      </section>
+
+      <section class="view" id="view-book">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">WORD BOOK</p>
+            <h2>单词本</h2>
+          </div>
+        </div>
+        <div class="toolbar">
+          <input id="searchInput" type="search" placeholder="搜索单词 / 释义 / 标签" />
+          <select id="filterSelect">
+            <option value="all">全部</option>
+            <option value="due">待复习</option>
+            <option value="wrong">错词</option>
+            <option value="favorite">收藏</option>
+            <option value="mastered">已掌握</option>
+          </select>
+        </div>
+        <div id="wordList" class="word-list"></div>
+      </section>
+
+      <section class="view" id="view-stats">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">DATA</p>
+            <h2>学习统计</h2>
+          </div>
+        </div>
+        <section class="panel">
+          <div class="stats-grid large">
+            <div><b id="totalLearned">0</b><span>总学习次数</span></div>
+            <div><b id="accuracyRate">0%</b><span>测试正确率</span></div>
+            <div><b id="reviewedToday">0</b><span>今日复习</span></div>
+            <div><b id="wordTotal">0</b><span>词库总量</span></div>
+          </div>
+        </section>
+        <section class="panel">
+          <h3>设置</h3>
+          <label class="setting-row">
+            <span>每日目标</span>
+            <input id="goalInput" type="number" min="5" max="200" step="5" />
+          </label>
+          <div class="actions two">
+            <button class="secondary" id="exportBtn">导出数据</button>
+            <button class="secondary" id="importBtn">导入数据</button>
+          </div>
+          <textarea id="dataBox" class="data-box" placeholder="导出的数据会显示在这里；导入时把 JSON 粘贴到这里。"></textarea>
+          <button class="danger outline" id="resetBtn">清空学习记录</button>
+        </section>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="active" data-nav="home">首页</button>
+      <button data-nav="learn">学习</button>
+      <button data-nav="quiz">测试</button>
+      <button data-nav="book">词本</button>
+      <button data-nav="stats">统计</button>
+    </nav>
+  </div>
+
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

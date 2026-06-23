@@ -1,0 +1,24 @@
+{
+  "name": "WordFlow 单词流",
+  "short_name": "WordFlow",
+  "description": "一个本地保存、带复习算法的英语背单词 App。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0f1324",
+  "theme_color": "#151A2D",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
